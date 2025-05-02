@@ -1,0 +1,128 @@
+{% extends "custom_admin/base.html" %}
+{% load static %}
+{% block block_products %}
+<!-- header -->
+<div class="row">
+    <div class="col col-4">
+        <h1 class="text-dark-2 fw-semibold fs-2">Productos</h1>
+    </div>
+    <div class="col col-8 d-flex justify-content-end">
+        <a href=" {% url 'warehouseApp:admin_product_create' %} " type="button" class="btn btn-primary d-flex gap-3 align-items-center text-white-1 rounded px-3 hover-scale-1">
+            <i class="fi fi-sr-plus"></i> 
+            Nuevo producto
+        </a>
+    </div>
+</div>
+
+<!-- filters -->
+<div class="container-fluid bg-white-2 pt-4 pb-4 pb-lg-4 px-4 rounded-3 mt-4">
+    <div class="row">
+        <div class="col">
+            <h4 class="text-dark-4 fw-medium mb-4 fs-4">Filtros de búsqueda</h4>
+            <form method="GET" class="row">{% csrf_token %}
+                <div class="col col-10">
+                    <div class="row row-cols-auto">
+                        <div class="col mb-3">
+                            {{ product_search.name.label }}
+                            {{ product_search.name }}
+                        </div>
+                        <div class="col mb-3">
+                            {{ product_search.status.label }}
+                            {{ product_search.status }}
+                        </div>
+                        <div class="col mb-3">
+                            {{ product_search.category.label }}
+                            {{ product_search.category }}
+                        </div>
+                        <div class="col mb-3">
+                            {{ product_search.sub_category.label }}
+                            {{ product_search.sub_category }}
+                        </div>
+                        <div class="col mb-3">
+                            {{ product_search.brand.label }}
+                            {{ product_search.brand }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-2">
+                    <div class="row">
+                        <div class="col d-flex flex-column align-items-end">
+                            <button type="submit" class="btn btn-secondary text-white-1 d-flex align-items-center gap-4 hover-scale-1">
+                                Buscar 
+                                <i class="fi fi-rr-search"></i>
+                            </button>       
+                        </div>
+                    </div>
+                </div>
+                
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- product list -->
+<section class="container-fluid p-0 mt-5">
+    <div class="row row-cols-1 gy-3">
+        {% for product in product_list %}
+            <div class="col">
+                <div class="container-fluid shadow-sm py-3 rounded-3 bg-white-2-hover">
+                    <div class="container-sm">
+                        <div class="row">
+                            <div class="col col-12 col-md-3 order-md-2 d-md-flex flex-column align-items-end">
+                                {% if product.status == '0' %}
+                                	<h5 class="badge bg-green-alpha-1 text-success">
+                                        {{product.get_status_display}}
+                                    </h5>
+                                {% else %}
+                                    <h5 class="badge bg-danger-alpha-1 text-danger">
+                                        {{product.get_status_display}}
+                                    </h5>
+                                {% endif %}
+                            </div>
+                            <div class="col col-11 col-md-8 order-md-1">
+                                <div class="row row-cols-2">
+                                    <div class="col col-3 col-lg-2 px-0 d-flex justify-content-center align-items-center">
+                                        {% if product.image %}
+                                            <img src="{{ product.image.url }}" class="img-fluid" style="max-height: 9rem;" alt="Producto">
+                                        {% else %}
+                                           <img src="{% static 'img/product_default.png' %}" class="img-fluid" style="max-height: 5.5rem;" alt="Producto">
+                                        {% endif %} 
+                                    </div>
+                                    <div class="col col-9 col-lg-10">
+                                        <div class="row">
+                                            <div class="col col-12">
+                                                <h6 class="fw-bold">
+                                                    {{product.name}}
+                                                    <span class="badge bg-secondary-alpha-1 text-secondary ">
+                                                        {{product.category}}
+                                                    </span>  
+                                                </h6>
+                                            </div>
+                                            <div class="col col-12 d-none d-md-block">
+                                                <h6 class="fw-light text-dark-5">{{product.description}}</h6>
+                                            </div>
+                                            <div class="col col-12">
+                                                <h3 class="fw-bold text-success mt-xl-4">{{product.price}}</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            
+                            <div class="col col-1 col-md-1 d-flex justify-content-center align-items-center justify-content-lg-end order-md-3">
+                                <a href="{% url "warehouseApp:admin_product_update" product.pk %}" class="btn-detail text-decoration-none p-2 rounded-circle hover-scale-2">
+                                    <i class="fi fi-sr-angle-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+            
+
+
+    </div>
+</section>
+{% endblock block_products %}

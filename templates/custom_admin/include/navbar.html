@@ -1,0 +1,40 @@
+{% load static %}
+<div class="admin-slider-bar admin-slider-bar-close bg-primary d-flex flex-column justify-content-between z-3" id="admin-slider-bar">
+    <div class="px-1 mt-3">
+        <div class="d-flex justify-content-center">
+            <img src=" {% static 'img/brand_short_negative_construye+.svg' %} " alt="brand" class="img-fluid" style="height: 38px;">
+        </div>
+        <nav id="nav-link">
+            <div class="mt-4">
+                <a href=" {% url "customAdminApp:dashboard" %} " id="link" class="text-decoration-none py-3 d-flex flex-column align-items-center gap-3 rounded-3 text-white-1 hover-bg-glass-1 px-3 fs-9">
+                    <i class="fi fi-rr-apps fs-6"></i>
+                    <p class="mb-0">
+                        Dashboard
+                    </p>
+                </a>
+            </div>
+            <div>
+                <a href="{% url "userApp:user_list" %}" id="link" class="text-decoration-none py-3 d-flex flex-column align-items-center gap-3 rounded-3 text-white-1 hover-bg-glass-1 px-3 fs-9">
+                    <i class="fi fi-rr-user fs-6"></i>
+                    <p class="mb-0">
+                        Usuarios
+                    </p>
+                </a>
+            </div>
+            <div>
+                <a href="{% url "warehouseApp:admin_product_list" %}" id="link" class="text-decoration-none py-3 d-flex flex-column align-items-center gap-3 rounded-3 text-white-1 hover-bg-glass-1 px-3 fs-9">
+                    <i class="fi fi-rr-box-open fs-6"></i>
+                    <p class="mb-0">
+                        Productos
+                    </p>
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    <div class="p-4 w-100 h-25">
+        <div class="bg-white-4 h-100 w-100 rounded-3">
+
+        </div>
+    </div>
+</div>

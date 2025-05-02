@@ -1,0 +1,12 @@
+{% extends 'custom_admin/base.html' %}
+{% block block_quote_detail %}
+
+    <h1>{{ quote.fk_user }}</h1>
+
+
+
+    {% for detail in detail_list %}
+    	<h2>{{ detail.fk_product }}</h2>
+    {% endfor %}
+
+{% endblock %}

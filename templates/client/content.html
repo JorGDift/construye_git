@@ -1,0 +1,120 @@
+{% extends 'client/index.html' %}
+{% load static %}
+{% block content %}
+    <!-- bg  -->
+    <div class="container-fluid d-flex align-items-center position-relative px-0" style="height: 80vh;">
+        <img class="h-100 w-100 position-absolute object-fit-cover z-0" src="{% static 'img/img-7.jpg' %}" alt="img">
+        <div class="container-sm z-3">
+            <div class="row">
+                <div class="col col-8">
+                    <div class="row row-cols-1">
+                        <div class="col">
+                            <h1 class="text-white-2">Bienvenido</h1>
+                        </div>
+                        <div class="col">
+                            <p class="fs-3 text-white-2">
+                                Nunc congue facilisis mollis. Pellentesque consequat, nunc at congue suscipit, quam neque finibus urna.
+                            </p>
+                        </div>
+                        <div class="col">
+                            <button type="button" class="btn btn-primary text-white-2 mt-4">Comenzar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- info section  -->
+    <section class="container-sm" style="margin-top: 10rem; margin-bottom: 10rem">
+        <div class="row row-cols-1 row-cols-md-2 gx-lg-5 gy-4">
+            <div class="col">
+                <div class="row">
+                    <div class="col">
+                        <div class="row row-cols-1 gy-4">
+                            <div class="col">
+                                <img class="img-fluid" src="{% static 'img/img-1.jpg' %}" alt="img">
+                            </div>
+                            <div class="col">
+                                <img class="img-fluid object-fit-cover w-100" src="{% static 'img/img-2.jpg' %}" alt="img" style="max-height: 20rem">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <img class="img-fluid h-100 object-fit-cover" src="{% static 'img/img-3.jpg' %}" alt="img">
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="row row-cols-1 text-dark-2">
+                    <div class="col">
+                        <h6 class="text-primary">lobortis</h6>
+                        <h2 class="fw-bold">Phasellus sollicitudin</h2>
+                        <p class="fs-5 fw-light text-dark-6">Phasellus mattis arcu justo, egestas pharetra turpis aliquet eu. Aenean gravida quam at nunc imperdiet,</p>
+                    </div>
+                    <div class="col mt-3">
+                        <div class="row row-cols-2">
+                            <div class="col">
+                                <div class="d-flex align-items-center gap-3 mb-3">
+                                    <i class="fi fi-sr-check"></i>
+                                    <h6 class="mb-0">Type something</h6>
+                                </div>
+                                <div class="d-flex align-items-center gap-3 mb-3">
+                                    <i class="fi fi-sr-check"></i>
+                                    <h6 class="mb-0">Type something</h6>
+                                </div>
+                                <div class="d-flex align-items-center gap-3 mb-3">
+                                    <i class="fi fi-sr-check"></i>
+                                    <h6 class="mb-0">Type something</h6>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="d-flex align-items-center gap-3 mb-3">
+                                    <i class="fi fi-sr-check"></i>
+                                    <h6 class="mb-0">Type something</h6>
+                                </div>
+                                <div class="d-flex align-items-center gap-3 mb-3">
+                                    <i class="fi fi-sr-check"></i>
+                                    <h6 class="mb-0">Type something</h6>
+                                </div>
+                                <div class="d-flex align-items-center gap-3 mb-3">
+                                    <i class="fi fi-sr-check"></i>
+                                    <h6 class="mb-0">Type something</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ironmongery section  -->
+    <section class="container-fluid bg-white-3 py-5" style="margin-top: 10rem; margin-bottom: 10rem">
+        <div class="container-sm">
+            <div class="row justify-content-center">
+                <div class="col col-12 col-md-8 col-lg-6 text-center">
+                    <h4>Curabitur efficitur non nisl ut vulputate.</h4>
+                    <p>Nam efficitur condimentum nibh, vitae sodales lectus gravida a. Nullam id libero ut est venenatis ultricies.</p>
+                </div>
+            </div>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 mt-5">
+                {% for ironmongery in ironmongery_list %}
+                    <div class="col hover-scale-1 mb-5 pt-4">
+                        <div class="bg-white-1 rounded-2 position-relative p-4">
+                            <img class="position-absolute img-fluid bottom-50 object-fit-cover"
+                                 src="{{ ironmongery.logo.url }}"
+                                 alt="img" style="height: 7rem; width: 7rem; left: 65%"
+                            >
+                            <h2>{{ ironmongery.name }}</h2>
+                            <a href="{% url 'ironmongeryApp:ironmongery_page' ironmongery.id %}" class="text-decoration-none icon-link icon-link-hover">
+                                Ver más
+                                <i class="fi fi-rr-arrow-right bi" aria-hidden="true"><use xlink:href="#arrow-right"></use></i>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock content %}

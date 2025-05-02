@@ -1,0 +1,144 @@
+{% extends 'custom_admin/base.html' %}
+{% load static %}
+{% block block_product_update %}
+    <section class="container-sm p-0 mt-4">
+        <div class="row row-cols-1">
+            
+            <div class="col mb-5">
+                <a class="d-flex text-decoration-none gap-3" href="{% url 'warehouseApp:admin_product_list' %}">
+                    <i class="fi fi-rr-arrow-left"></i>
+                    Regresar
+                </a>
+            </div>
+            
+            <div class="col mb-4">
+                <div class="container-sm bg-white-2 py-4 rounded-2 px-4">
+                    <div class="row">
+                        <div class="col col-12 col-md-4 order-md-2 d-md-flex flex-column align-items-end">
+                            {% if product.status == '0' %}
+                                <h5 class="badge bg-green-alpha-1 text-success">
+                                    {{product.get_status_display}}
+                                </h5>
+                            {% else %}
+                                <h5 class="badge bg-danger-alpha-1 text-danger">
+                                    {{product.get_status_display}}
+                                </h5>
+                            {% endif %}
+                        </div>
+                        <div class="col col-12 col-md-8 order-md-1">
+                            <div class="row row-cols-2">
+                                <div class="col col-3 col-lg-2 px-0 d-flex justify-content-center align-items-center">
+                                    {% if product.image %}
+                                        <img src="{{ product.image.url }}" class="img-fluid" style="max-height: 12rem;" alt="Producto">
+                                    {% else %}
+                                       <img src="{% static 'img/product_default.png' %}" class="img-fluid" style="max-height: 7rem;" alt="Producto">
+                                    {% endif %}
+                                </div>
+                                <div class="col col-9 col-lg-10">
+                                    <div class="row">
+                                        <div class="col col-12">
+                                            <h6 class="fw-bold">
+                                                {{product.name}}
+                                                <span class="badge bg-secondary-alpha-1 text-secondary ">
+                                                    {{product.category}}
+                                                </span>
+                                            </h6>
+                                        </div>
+                                        <div class="col col-12">
+                                            <h6 class="fw-light text-dark-5">{{product.description}}</h6>
+                                        </div>
+                                        <div class="col col-12">
+                                            <h3 class="fw-bold text-success mt-xl-4">{{product.price}}</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="col">
+                <div class="container-sm bg-white-2 rounded-2 py-4 px-4 shadow-sm py-5">
+                    <div class="row justify-content-center">
+                        <div class="col col-8">
+                            <div class="row mb-4 row-cols-1">
+                                <div class="col">
+                                    <h4 class="fw-bold text-dark-2">Actualizar producto</h4>
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <form class="" method="post" action="{% url 'warehouseApp:admin_product_update' product.pk %}" enctype="multipart/form-data"> {% csrf_token %}
+                                    <div class="col ">
+                                        <div class="mb-4">
+                                            {{ form.image.label }}
+                                            {{ form.image }}
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="row row-cols-1 row-cols-md-2 gx-md-5">
+                                            <div class="col">
+                                                <div class="mb-4">
+                                                    {{ form.name.label }}
+                                                    {{ form.name }}
+                                                </div>
+                                                <div class="mb-4">
+                                                    {{ form.description.label }}
+                                                    {{ form.description }}
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="row row-cols-1 row-cols-md-2">
+                                                    <div class="col">
+                                                        <div class="mb-4 mt-4 mt-md-0">
+                                                            {{ form.category.label }}
+                                                            {{ form.category }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="mb-4">
+                                                            {{ form.sub_category.label }}
+                                                            {{ form.sub_category }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-4">
+                                                    {{ form.status.label }}
+                                                    {{ form.status }}
+                                                </div>
+                                                <div class="mb-4">
+                                                    {{ form.brand.label }}
+                                                    {{ form.brand }}
+                                                </div>
+                                                <div class="d-flex flex-column">
+                                                    {{ form.price.label }}
+                                                    <div class="input-group d-flex">
+                                                        {{ form.price }}
+                                                        <span class="input-group-text">$</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+    
+                                        </div>
+                                    </div>
+                                    <div class="col col-12 d-flex justify-content-end mt-4">
+                                        <button type="submit" class="btn btn-primary text-white-2 hover-scale-1">Actualizar producto</button>
+                                    </div>
+                                </form>
+                                <form class="mt-5" action="{% url "warehouseApp:admin_product_delected" product.pk %}" method="post">{% csrf_token %}
+                                    <div class="d-grid gap-2">
+                                        <button type="submit" class="btn btn-danger d-flex justify-content-center align-items-center text-white-2 gap-3 hover-scale-1">
+                                            <i class="fi fi-rr-trash"></i>
+                                            Eliminar producto
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock block_product_update %}

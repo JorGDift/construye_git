@@ -1,0 +1,102 @@
+{% load static %}
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <form class="d-flex gap-2" id="search-form">{% csrf_token %}
+                    <input type="search" id="id_promp" class="form-control">
+                    <button class="btn btn-outline-success" type="submit"><i class="fi fi-rr-search"></i></button>
+                </form>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="list-group products_container" id="productsContainer">
+                    <h6 class="text-dark-5 mb-0 fst-italic">Resultados de Búsqueda</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('search-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Evitar que el formulario se envíe de forma predeterminada
+
+        const searchUrl = "{% url 'warehouseApp:client_search_product' %}";
+
+        let promp = document.getElementById('id_promp').value;
+
+        if (promp.length > 0) {
+            fetch(`${searchUrl}?promp=${encodeURIComponent(promp)}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('La solicitud no fue exitosa');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Iterar sobre los datos de los productos
+                    data.forEach(product => {
+                        // Obtener el contenedor de productos
+                        const productsContainer = document.getElementById("productsContainer");
+
+                        // Limpiar el contenedor de productos antes de agregar nuevos elementos
+                        //productsContainer.innerHTML = '';
+                        while (productsContainer.firstChild){
+                            productsContainer.removeChild(productsContainer.firstChild)
+                        }
+
+                        // Iterar sobre los datos de los productos
+                        for (const product of Object.values(data)) {
+                            const {id, ironmongery, name, price, image} = product;
+
+                            // Crear un elemento de lista para cada producto
+                            const listItem = document.createElement('a');
+                            // Construir la URL usando la vista de Django y el ID del producto
+                            const productDetailURL = "{% url 'ironmongeryApp:client_product_detail' 0 %}".replace('0', id);
+                            
+                            listItem.href = productDetailURL;
+                            listItem.className = 'list-group-item list-group-item-action border-0 py-3 rounded-2';
+
+                            // Construir la estructura del elemento de producto con los datos reales
+                            listItem.innerHTML = `
+                                <div class="row">
+                                    <div class="col col-2">
+                                        <img src="${image}" class="img-fluid" alt="${name}">
+                                    </div>
+                                    <div class="col col-7">
+                                        <h6 class="mb-0">${name}</h6>
+                                        <h6 class="mb-0 text-secondary">${ironmongery}</h6>
+                                    </div>
+                                    <div class="col col-3">
+                                        <h6 class="mb-0 text-success fw-bold fs-5">$${price}</h6>
+                                    </div>
+                                </div>
+                            `;
+
+                            // Agregar el elemento de producto al contenedor
+                            productsContainer.appendChild(listItem);
+                        }
+                    });
+                })
+                .catch(error => {
+                    // Deshabilitar el contenedor de resultados
+                    let resultsContainer = document.getElementById('search-results');
+                    resultsContainer.innerHTML = '';
+                    resultsContainer.classList.add('disabled');
+
+                    // Mostrar un mensaje de error más amigable al usuario
+                    let errorMessage = document.createElement('p');
+                    errorMessage.textContent = 'Ocurrió un error al obtener los productos. Por favor, inténtalo de nuevo más tarde.';
+                    resultsContainer.appendChild(errorMessage);
+
+                    // Registrar el error en la consola para fines de depuración
+                    console.error('Error al obtener datos:', error);
+                });
+        } else {
+            // Limpiar resultados si la búsqueda está vacía
+            document.getElementById('search-results').innerHTML = '';
+        }
+    });
+</script>

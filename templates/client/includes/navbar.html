@@ -1,0 +1,138 @@
+{% load static %}
+<!-- nav bar -->
+<nav class="navbar navbar-expand-lg position-sticky sticky-top bg-white-1 px-md-5">
+    <div class="container-fluid">
+        <img src="{% static 'img/brand_positive-construye+.svg' %}" style="height:1.4rem" class="me-4" alt="logo">
+        <!-- btn collapse navbar -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{% url 'coreApp:Inicio' %}">Inicio</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav me-5">
+                <li class="nav-item">
+                    {% if request.user.is_authenticated %}
+                    	<a class="text-decoration-none nav-link" href="{% url 'customAdminApp:dashboard' %}">DashBoard - Admin</a>
+                    {% else %}
+                        <a class="text-decoration-none nav-link" href="{% url 'coreApp:Login' %}">Iniciar sesión</a>
+                    {% endif %}
+
+                </li>
+            </ul>
+            <form class="d-flex" role="search">
+                <button class="btn btn-outline-primary d-flex align-items-center gap-3" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <i class="fi fi-rr-search"></i>
+                    <h5 class="mb-0">Buscar</h5>
+                </button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<!-- Modal -->
+<div class="modal fade exampleModal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <form class="d-flex gap-2" id="search-form">{% csrf_token %}
+                    <input type="search" id="id_promp" class="form-control" placeholder="ej. Cemento, Taladro. etc...">
+                    <button class="btn btn-outline-success" type="submit"><i class="fi fi-rr-search"></i></button>
+                </form>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="list-group products_container" id="productsContainer">
+                    <h6 class="fw-light text-muted">Busca herramientas o materiales de construcción (ej. Cemento, Taladro, Martillo. etc...)</h6>
+                    <h5 class="text-dark-5 mb-0 fst-italic">Resultados de Búsqueda</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('search-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Evitar que el formulario se envíe de forma predeterminada
+
+        const searchUrl = "{% url 'warehouseApp:client_search_product' %}";
+        let promp = document.getElementById('id_promp').value;
+
+        if (promp.length > 0) {
+            fetch(`${searchUrl}?promp=${encodeURIComponent(promp)}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('La solicitud no fue exitosa');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Obtener el contenedor de productos
+                    const productsContainer = document.getElementById("productsContainer");
+
+                    // Limpiar el contenedor de productos antes de agregar nuevos elementos
+                    while (productsContainer.firstChild) {
+                        productsContainer.removeChild(productsContainer.firstChild)
+                    }
+
+                    // Agregar el título general
+                    const titleElement = document.createElement('h5');
+                    titleElement.className = 'mb-3 mt-2 text-primary fst-italic';
+                    titleElement.textContent = 'Productos en las ferreterías registradas';
+                    productsContainer.appendChild(titleElement);
+
+                    // Iterar sobre los datos de los productos
+                    for (const product of Object.values(data)) {
+                        const {id, ironmongery, name, price, image} = product;
+
+                        // Crear un elemento de lista para cada producto
+                        const listItem = document.createElement('a');
+                        // Construir la URL usando la vista de Django y el ID del producto
+                        const productDetailURL = "{% url 'ironmongeryApp:client_product_detail' 0 %}".replace('0', id);
+
+                        listItem.href = productDetailURL;
+                        listItem.className = 'list-group-item list-group-item-action border-0 py-3 rounded-2';
+
+                        // Construir la estructura del elemento de producto con los datos reales
+                        listItem.innerHTML = `
+                            <div class="row">
+                                <div class="col col-2">
+                                    <img src="${image}" class="img-fluid" alt="${name}">
+                                </div>
+                                <div class="col col-7">
+                                    <h6 class="mb-0">${name}</h6>
+                                    <h6 class="mb-0 text-secondary">${ironmongery}</h6>
+                                </div>
+                                <div class="col col-3">
+                                    <h6 class="mb-0 text-success fw-bold fs-5">$${price}</h6>
+                                </div>
+                            </div>
+                        `;
+
+                        // Agregar el elemento de producto al contenedor
+                        productsContainer.appendChild(listItem);
+                    }
+                })
+                .catch(error => {
+                    // Deshabilitar el contenedor de resultados
+                    let resultsContainer = document.getElementById('search-results');
+                    resultsContainer.innerHTML = '';
+                    resultsContainer.classList.add('disabled');
+
+                    // Mostrar un mensaje de error más amigable al usuario
+                    let errorMessage = document.createElement('p');
+                    errorMessage.textContent = 'Ocurrió un error al obtener los productos. Por favor, inténtalo de nuevo más tarde.';
+                    resultsContainer.appendChild(errorMessage);
+
+                    // Registrar el error en la consola para fines de depuración
+                    console.error('Error al obtener datos:', error);
+                });
+        } else {
+            // Limpiar resultados si la búsqueda está vacía
+            document.getElementById('search-results').innerHTML = '';
+        }
+    });
+</script>

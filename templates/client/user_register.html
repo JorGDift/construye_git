@@ -1,0 +1,365 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es_MX">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- icons -->
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
+
+    <!-- swiper css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+
+    <!-- Bootstrap css -->
+    <link rel="stylesheet" href=" {% static 'css/custom.css' %} ">
+
+    <style>
+        .swiper {
+            width: 100%;
+            height: 100%;
+        }
+
+        .swiper-slide {
+            text-align: center;
+            font-size: 18px;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .swiper-slide img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .swiper-button-next {
+            height: auto;
+            width: auto;
+            position: relative;
+        }
+        .swiper-button-prev {
+            height: auto;
+            width: auto;
+            position: relative;
+        }
+        .swiper-button-next::after {
+            content: " ";
+        }
+        .swiper-button-prev::after {
+            content: " ";
+        }
+    </style>
+
+    <title>Crear Usuario</title>
+</head>
+<body>
+
+    <!--navbar-->
+    <nav class="navbar">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="{% static 'img/brand_positive-construye+.svg' %}" style="height: 1.6rem" alt="Brand">
+            </a>
+        </div>
+    </nav>
+
+    <!--conten-->
+    <div class="container-fluid">
+        <div class="container-sm">
+            <div class="row justify-content-center align-items-center">
+                <div class="col col-7">
+                    <div class="row shadow-sm rounded-2 px-4 py-5">
+                        <div class="col">
+                            <div class="row row-cols-1 mb-2">
+                                <div class="col d-flex justify-content-center">
+                                    <h1 class="fw-semibold fs-3 text-dark-2">
+                                        Crear cuenta Construye+
+                                    </h1>
+                                </div>
+                            </div>
+                            <!-- Swiper -->
+                            <div class="row">
+                                <div class="col">
+                                    <form method="post" enctype="multipart/form-data">{% csrf_token %}
+                                        <div class="swiper mySwiper">
+                                            <div class="swiper-wrapper">
+                                                <!-- Slide 1 (Términos y condiciones) -->
+                                                <div class="swiper-slide" id="termsSlide">
+                                                    <div class="row row-cols-1">
+                                                        <div class="col mt-2">
+                                                            <p class="text-start fw-medium text-dark-5">
+                                                                Nulla consequat, sapien at tincidunt rutrum, lorem dolor feugiat odio, eget dapibus ante erat ac erat.
+                                                            </p>
+                                                        </div>
+                                                        <div class="col">
+                                                            <h5 class="text-start fw-semibold text-dark-2">
+                                                                Welcome
+                                                            </h5>
+                                                        </div>
+                                                        <div class="col">
+                                                            <p class="text-start fw-medium text-dark-5">
+                                                                Donec congue sit amet metus ut dictum. Etiam eget volutpat justo, quis placerat leo.
+                                                                Suspendisse egestas ut tellus quis viverra. Maecenas facilisis cursus diam, id gravida est.
+                                                            </p>
+                                                        </div>
+                                                        <div class="col mb-4 d-flex">
+                                                            <a href="" class="d-flex gap-2 text-decoration-none">
+                                                                <i class="fi fi-rr-completed"></i>
+                                                                Terminos y condiciones
+                                                            </a>
+                                                        </div>
+                                                        <div class="col d-flex justify-content-start mb-5 gap-2">
+                                                            <input type="checkbox" id="termsCheckbox" value="firs_checkbox" />
+                                                            <label for="termsCheckbox">E leido los terminos y condiciones</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Slide 2 (Datos del usuario) -->
+                                                <div class="swiper-slide justify-content-start" id="userDataSlide">
+                                                    <div class="row row-cols-1 w-100 px-2 justify-content-center mt-2">
+                                                        <div class="col-9">
+                                                            <div class="row row-cols-1 justify-content-center">
+                                                                <div class="col text-start mb-2">
+                                                                    <p>Ingresa los datos personales para continuar</p>
+                                                                </div>
+                                                                <div class="col text-start mb-3">
+                                                                    {{ form.user_email.label }}
+                                                                    {{ form.user_email }}
+                                                                </div>
+                                                                <div class="col text-start mb-3">
+                                                                    <div class="row">
+                                                                        <div class="col">
+                                                                            {{ form.user_first_name.label }}
+                                                                            {{ form.user_first_name }}
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            {{ form.user_last_name.label }}
+                                                                            {{ form.user_last_name }}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col text-start mb-3">
+                                                                    {{ form.user_phone.label }}
+                                                                    {{ form.user_phone }}
+                                                                </div>
+                                                                <div class="col text-start mb-3">
+                                                                    {{ form.user_password.label }}
+                                                                    {{ form.user_password }}
+                                                                </div>
+                                                                <div class="col text-start mb-5">
+                                                                    {{ form.user_password2.label }}
+                                                                    {{ form.user_password2 }}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Slide 3 (Datos de la ferretería) -->
+                                                <div class="swiper-slide" id="ironmongeryDataSlide">
+                                                    <div class="row row-cols-1 w-100 px-2 justify-content-center mt-2">
+                                                        <div class="col-9">
+                                                            <div class="row row-cols-1 justify-content-center">
+                                                                <div class="col text-start mb-2">
+                                                                    <p>Ingresa los datos de la ferreteria continuar</p>
+                                                                </div>
+                                                                <div class="col text-start mb-3">
+                                                                    {{ form.ironmongery_logo.label }}
+                                                                    {{ form.ironmongery_logo }}
+                                                                </div>
+                                                                <div class="col text-start mb-3">
+                                                                    {{ form.ironmongery_name.label }}
+                                                                    {{ form.ironmongery_name }}
+                                                                </div>
+                                                                <div class="col text-start mb-3">
+                                                                    {{ form.ironmongery_phone.label }}
+                                                                    {{ form.ironmongery_phone }}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Slide 4 (Ubicación de la ferretería) -->
+                                                <div class="swiper-slide" id="ironmongeryLocationSlide">
+                                                    <div class="row row-cols-1 w-100 px-2 justify-content-center mt-2">
+                                                        <div class="col-9">
+                                                            <div class="row row-cols-1 justify-content-center">
+                                                                <div class="col text-start mb-2">
+                                                                    <p>Ingresa los datos de ubicacion de la ferreteria continuar</p>
+                                                                </div>
+                                                                <div class="col text-start mb-3">
+                                                                    {{ form.ironmongery_city.label }}
+                                                                    {{ form.ironmongery_city }}
+                                                                </div>
+                                                                <div class="col text-start mb-3">
+                                                                    <div class="row">
+                                                                        <div class="col">
+                                                                            {{ form.ironmongery_cologne.label }}
+                                                                            {{ form.ironmongery_cologne }}
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            {{ form.ironmongery_street.label }}
+                                                                            {{ form.ironmongery_street }}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col text-start">
+                                                                    <div class="row">
+                                                                        <div class="col">
+                                                                            {{ form.ironmongery_postal_code.label }}
+                                                                            {{ form.ironmongery_postal_code }}
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            {{ form.ironmongery_outdoor_numer.label }}
+                                                                            {{ form.ironmongery_outdoor_numer }}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col d-flex justify-content-end mt-5">
+                                                                    <input type="submit" class="btn btn-primary text-white-2" value="Registrarse">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-3">
+                                                <div class="col d-flex justify-content-between px-1">
+                                                    <div class="swiper-button-prev">Regresar</div>
+                                                    <div class="swiper-button-next">Siguiente</div>
+                                                </div>
+                                                <!--<div class="swiper-pagination"></div>-->
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+        </div>
+    </div>
+
+    <!-- swiper js -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            cssMode: true,
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            // Escucha el cambio de slide
+            on: {
+                slideChange: function () {
+                    handleSlideChange(swiper.activeIndex);
+                },
+            },
+        });
+
+        var nextButton = document.querySelector(".swiper-button-next");
+
+        // Al iniciar, deshabilita el botón "Siguiente"
+        disableNextButton();
+
+        // Función que maneja el cambio de slide
+        function handleSlideChange(activeIndex) {
+            if (activeIndex === 0) {
+                // Términos y condiciones
+                var termsCheckbox = document.getElementById('termsCheckbox');
+                validateTerms(termsCheckbox);
+                termsCheckbox.addEventListener('change', function () {
+                    validateTerms(termsCheckbox);
+                });
+
+            } else if (activeIndex === 1) {
+                // Validar datos personales
+                document.querySelectorAll('#email, #first_name, #last_name, #phone, #password, #password2').forEach(input => {
+                    input.removeEventListener('input', validatePersonalInfoForm); // Eliminar cualquier evento duplicado
+                    input.addEventListener('input', validatePersonalInfoForm); // Añadir evento de nuevo
+                });
+                console.log("entre")
+                validatePersonalInfoForm(); // Ejecutar validación inicial
+
+            } else if (activeIndex === 2) {
+                // Validar datos de la ferretería
+                document.querySelectorAll('#ironmongery_logo, #ironmongery_name, #ironmongery_phone').forEach(input => {
+                    input.removeEventListener('input', validateIronmongeryForm); // Eliminar cualquier evento duplicado
+                    input.addEventListener('input', validateIronmongeryForm); // Añadir evento de nuevo
+                });
+                validateIronmongeryForm(); // Ejecutar validación inicial
+            }
+        }
+
+        // Validar términos y condiciones
+        function validateTerms(termsCheckbox) {
+            if (termsCheckbox.checked) {
+                enableNextButton();
+            } else {
+                disableNextButton();
+            }
+        }
+
+        // Validar datos personales
+        function validatePersonalInfoForm() {
+            var email = document.getElementById('id_user_email').value;
+            var firstName = document.getElementById('id_user_first_name').value;
+            var lastName = document.getElementById('id_user_last_name').value;
+            var phone = document.getElementById('id_user_phone').value;
+            var password = document.getElementById('id_user_password').value;
+            var password2 = document.getElementById('id_user_password2').value;
+
+            // Comprobaciones básicas para asegurarse de que los campos estén llenos
+            if (email && validateEmail(email) && firstName && lastName && phone && password && password === password2) {
+                enableNextButton();
+            } else {
+                disableNextButton();
+            }
+        }
+
+        // Validar datos de la ferretería
+        function validateIronmongeryForm() {
+            var logo = document.getElementById('ironmongery_logo').value;
+            var name = document.getElementById('ironmongery_name').value;
+            var phone = document.getElementById('ironmongery_phone').value;
+
+            if (logo && name && phone) {
+                enableNextButton();
+            } else {
+                disableNextButton();
+            }
+        }
+
+        // Validar el formato del correo electrónico
+        function validateEmail(email) {
+            var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        // Habilitar el botón "Siguiente"
+        function enableNextButton() {
+            nextButton.style.pointerEvents = "auto";
+            nextButton.style.opacity = "1";
+        }
+
+        // Deshabilitar el botón "Siguiente"
+        function disableNextButton() {
+            nextButton.style.pointerEvents = "none";
+            nextButton.style.opacity = "0.5";
+        }
+
+        // Ejecutar validación inicial en el primer slide (índice 0)
+        handleSlideChange(0);
+    </script>
+
+
+
+
+</body>

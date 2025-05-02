@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es_MX">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- icons -->
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
+
+    <!-- Bootstrap css -->
+    <link rel="stylesheet" href=" {% static 'css/custom.css' %} ">
+
+    <title>Administrador Construye +</title>
+</head>
+
+<body>
+    <div class="admin-container py-lg-2 pe-lg-2 bg-primary">
+        
+        <!--nav bar -->
+        {% include "custom_admin/include/navbar.html" %}
+
+        <!--content container -->
+        <div class="admin-content bg-white-4 w-100 rounded p-4 z-2 overflow-scroll">
+            <!--content header -->
+            {% include "custom_admin/include/header_bar.html" %}
+
+            <!--content body -->
+            <section class="container-fluid p-0 mt-3">
+
+                <!-- block users -->
+                {% block user_create %}{% endblock user_create %}
+            
+                {% block block_users %}{% endblock block_users %}
+
+                {% block block_user_detail %}{% endblock block_user_detail %}
+            
+                {% block block_user_update %}{% endblock block_user_update %}
+
+                <!-- block product -->
+                {% block block_product_create %}{% endblock block_product_create %}
+
+                {% block block_products %}{% endblock block_products %}
+
+                {% block block_product_detail %}{% endblock block_product_detail %}
+
+                {% block block_product_update %}{% endblock block_product_update %}
+
+                <!-- block quotes -->
+                {% block block_quotes %}{% endblock block_quotes %}
+
+                {% block block_quote_detail %}{% endblock block_quote_detail %}
+
+            </section>
+
+            {% include 'custom_admin/include/footer.html' %}
+
+        </div>
+    </div>
+
+    <script src=" {% static 'js/scrips.js' %} "></script>
+    <script src=" {% static 'libs/bootstrap-5.3.2/dist/js/bootstrap.bundle.min.js' %} "></script>
+    
+</body>
+</html>

@@ -1,0 +1,32 @@
+{% extends 'client/index.html' %}
+{% load static %}
+{% block product_detail %}
+    <div class="container-fluid mt-5">
+        <div class="container-sm">
+            <div class="row justify-content-center mt-5">
+                <div class="col col-8">
+                    <div class="row">
+                        <div class="col d-flex justify-content-between">
+                            <h3 class="fw-bold"><span class="fw-light">Producto de:</span> {{ product.fk_ironmongery }}</h3>
+                            <a href="{% url 'ironmongeryApp:ironmongery_page' product.fk_ironmongery.id %}" class="text-decoration-none icon-link icon-link-hover">
+                                Ver pagina
+                                <i class="fi fi-rr-arrow-right bi" aria-hidden="true"><use xlink:href="#arrow-right"></use></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col">
+                            <img src="{{ product.image.url }}" class="img-fluid" style="max-height: 25rem;" alt="producto">
+                        </div>
+                        <div class="col">
+                            <h6 class="text-secondary">{{ product.brand }}</h6>
+                            <h2 class="">{{ product.name }}</h2>
+                            <h3 class="text-success fw-bold">$ {{ product.price }}</h3>
+                            <h5 class="text-dark-5 mt-4 fw-light">{{ product.description }}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock product_detail %}

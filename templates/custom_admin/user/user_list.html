@@ -1,0 +1,87 @@
+{% extends "custom_admin/base.html" %}
+{% load static %}
+
+{% block block_users %}
+<!-- header -->
+<div class="row">
+    <div class="col col-4">
+        <h1 class="text-dark-2 fw-semibold fs-2">Usuarios</h1>
+    </div>
+    <div class="col col-8 d-flex justify-content-end">
+        <a href="{% url 'userApp:user_create' %}" class="btn btn-primary d-flex gap-3 align-items-center text-white-1 rounded px-3 hover-scale-1"><i class="fi fi-rr-user-add"></i>Nuevo usuario</a>
+    </div>
+</div>
+
+<!-- filters -->
+<div class="container-fluid bg-white-2 pt-4 pb-4 pb-lg-4 px-4 rounded-3 mt-4">
+    <div class="row">
+        <div class="col">
+            <h4 class="text-dark-4 fw-medium mb-4 fs-4">Filtros de búsqueda</h4>
+            <form method="GET" class="row row-cols-1 row-cols-lg-2">
+                <div class="col col-lg-8 col-xl-6">
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 gx-xl-5">
+                        <div class="col mb-3">
+                            {{ user_search_form.firs_name.label }}
+                            {{ user_search_form.firs_name }}
+                        </div>
+                        <div class="col mb-3">
+                            {{ user_search_form.email.label }}
+                            {{ user_search_form.email }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-lg-4 col-xl-6">
+                    <div class="row">
+                        <div class="col d-flex flex-column align-items-end">
+                            <button type="submit" class="btn btn-secondary text-white-1 d-flex align-items-center gap-4 hover-scale-1">
+                                Buscar 
+                                <i class="fi fi-rr-search"></i>
+                            </button>       
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- user list -->
+<section class="container-fluid p-0 mt-5">
+    <div class="row row-cols-1 gy-3">
+        {% for user in user_list %}
+        	<div class="col">
+                <div class="container-fluid shadow-sm py-3 rounded-3 bg-white-2-hover">
+                    <div class="container-sm">
+                        <div class="row text-dark-2 gy-4">
+                            <div class="col col-9 col-md-8 align-self-center d-flex">
+                                <div class="row row-cols-2">
+                                    <div class="col col-3 align-self-center">
+                                        {% if user.avatar %}
+                                            <img class="rounded-circle object-fit-cover" style="height: 3.2rem; width: 3.2rem" src="{{ user.avatar.url }}" alt="user">
+                                        {% else %}
+                                            <i class="fi fi-rr-circle-user" style="font-size: 2.8rem;"></i>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col col-9">
+                                        <h5>{{ user.firs_name }}</h5>
+                                        <h6 class="fw-light text-dark-5">{{ user.email }}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col col-2 col-md-3 align-self-md-center d-flex flex-column align-items-end">
+                                <h6 class="badge bg-secondary-alpha-1 text-secondary">status</h6>
+                                <h6 class="fw-light text-dark-5 d-none d-md-block">{{ user.phone }}</h6>
+                            </div>
+                            <div class="col col-1 align-self-center d-flex justify-content-center">
+                                <a href="{% url "userApp:user_update" user.pk %}" class="text-decoration-none p-2 rounded-circle btn-detail hover-scale-2">
+                                    <i class="fi fi-sr-angle-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock block_users %}

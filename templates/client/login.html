@@ -1,0 +1,49 @@
+{% extends 'client/index.html' %}
+{% load static %}
+{% block login %}
+    <div class="container-fluid">
+        <div class="container-sm">
+            <div class="row justify-content-center">
+                <div class="col col-8 bg-white-3 shadow-sm mt-5 rounded-2">
+                    <div class="row row-cols-2">
+                        <div class="col p-5">
+                            <div class="row">
+                                <div class="col">
+                                    <h6 class="text-dark-2 fw-medium">Bienvenido</h6>
+                                    <h4 class="text-dark-2 fw-bold">Inicia sesión</h4>
+                                    <p class="text-dark-5">Vivamus massa ex, sagittis consectetur sapien vitae, congue auctor risus</p>
+                                </div>
+                                <form method="post" action="{% url 'userApp:user_login' %}" target="_blank">{% csrf_token %}
+                                    <div class="row row-cols-1">
+                                        <div class="col mt-3">
+                                            <div class="form-floating mb-3">
+                                                {{ user_login_form.email }}
+                                                <label for="floatingInput">Email</label>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-floating">
+                                                {{ user_login_form.password }}
+                                                <label for="floatingInput">Password</label>
+                                            </div>
+                                        </div>
+                                        <div class="col mt-3 d-flex justify-content-end">
+                                            <h6>¿No tienes cuenta? <a href="{% url 'userApp:user_register' %}">Registrarse</a> </h6>
+                                        </div>
+                                        <div class="col mt-5">
+                                            <button type="submit" class="btn btn-primary text-white-2">Iniciar sesión</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                        <div class="col p-0">
+                            <img class="img-fluid object-fit-cover w-100 h-100" style="max-height: 33rem" src="{% static 'img/img-4.jpg' %}" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock login %}

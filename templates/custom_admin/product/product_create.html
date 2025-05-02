@@ -1,0 +1,76 @@
+{% extends 'custom_admin/base.html' %}
+{% block block_product_create %}
+    <div class="container-sm">
+        <div class="row justify-content-center">
+            <div class="col col-6 mb-5 px-0">
+                <a class="d-flex text-decoration-none gap-3" href="{% url 'warehouseApp:admin_product_list' %}">
+                    <i class="fi fi-rr-arrow-left"></i>
+                    Regresar
+                </a>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col col-6">
+                <form method="post" enctype="multipart/form-data"> {% csrf_token %}
+                    <div class="row row-cols-1 bg-white-2 shadow-sm p-4 rounded-2">
+                        <div class="col px-0 mb-4">
+                             <h4 class="fw-bold">Agregar producto</h4>
+                        </div>
+                        <div class="col px-0">
+                            <div class="mb-3">
+                                {{ form.image.label }}
+                                {{ form.image }}
+                            </div>
+                        </div>
+                        <div class="col px-0">
+                            <div class="mb-3">
+                                {{ form.name.label }}
+                                {{ form.name }}
+                            </div>
+                        </div>
+                        <div class="col px-0">
+                            <div class="mb-3">
+                                {{ form.description.label }}
+                                {{ form.description }}
+                            </div>
+                        </div>
+                        <div class="col px-0">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="mb-3">
+                                        {{ form.category.label }}
+                                        {{ form.category }}
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="mb-3">
+                                        {{ form.sub_category.label }}
+                                        {{ form.sub_category }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col px-0">
+                            <div class="mb-3">
+                                {{ form.price.label }}
+                                {{ form.price }}
+                            </div>
+                        </div>
+                        <div class="col px-0">
+                            <div class="mb-3">
+                                {{ form.brand.label }}
+                                {{ form.brand }}
+                            </div>
+                        </div>
+                        <div class="col px-0 d-flex justify-content-end mt-3">
+                            <button type="submit" class="btn btn-primary hover-scale-1 text-white-2">Agregar producto</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+{% endblock block_product_create %}

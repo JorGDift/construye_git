@@ -1,0 +1,90 @@
+{% extends 'custom_admin/base.html' %}
+{% block block_user_update %}
+    <div class="container-sm">
+        <div class="row">
+            <div class="col p-0 mb-5">
+                <a class="d-flex text-decoration-none gap-3" href="{% url 'userApp:user_list' %}">
+                    <i class="fi fi-rr-arrow-left"></i>
+                    Regresar
+                </a>
+            </div>
+        </div>
+        
+        <div class="row gx-5">
+            <div class="col col-4">
+                <div class="row row-cols-1 bg-white-2 shadow-sm p-4 rounded-2">
+                    <div class="col px-0 d-flex justify-content-center">
+                        <img class="img-fluid rounded-circle object-fit-cover" src="{{ user.avatar.url }}" alt="Usuario" style="height: 10rem; width: 10rem">
+                    </div>
+                    <div class="col px-0 mt-4">
+                        <h6 class="text-dark-5">{{ user.email }}</h6>
+                    </div>
+                    <div class="col px-0">
+                        <h3 class="text-dark-2">{{ user.firs_name }}</h3>
+                    </div>
+                    <div class="col px-0 d-flex gap-3">
+                        <i class="fi fi-rr-phone-flip"></i>
+                        <h5 class="text-dark-5 my-0">{{ user.phone }}</h5>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col">
+                <div class="row bg-white-2 p-4 rounded-2">
+                    <form class="px-0" method="post" enctype="multipart/form-data"> {% csrf_token %}
+                        <div class="col mb-3">
+                            <h4 class="fw-bold">Actualizar usuario</h4>
+                        </div>
+                        <div class="col mb-3">
+                            {{ form.avatar.label }}
+                            {{ form.avatar }}
+                        </div>
+                        <div class="col mb-3">
+                            <div class="row">
+                                <div class="col">
+                                    {{ form.firs_name.label }}
+                                    {{ form.firs_name }}
+                                </div>
+                                <div class="col">
+                                    {{ form.last_name.label }}
+                                    {{ form.last_name }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col mb-3">
+                            {{ form.email.label }}
+                            {{ form.email }}
+                        </div>
+                        <div class="col mb-3">
+                            {{ form.phone.label }}
+                            {{ form.phone }}
+                        </div>
+                         <div class="col mb-3">
+                            {{ form.is_active.label }}
+                            {{ form.is_active }}
+                        </div>
+                        <div class="col mb-3">
+                            {{ form.is_staff.label }}
+                            {{ form.is_staff }}
+                        </div>
+                        <div class="col mt-5">
+                            <div class="row">
+                                <div class="col d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary text-white-2">Actualizar usuario</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <form class="mt-5 px-0" action="{% url "userApp:admin_user_deleted" user.pk %}" method="post">{% csrf_token %}
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-danger d-flex justify-content-center align-items-center text-white-2 gap-3 hover-scale-1">
+                                <i class="fi fi-rr-trash"></i>
+                                Eliminar usuario
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>   
+        </div>
+    </div>
+{% endblock block_user_update %}
