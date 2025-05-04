@@ -28,12 +28,12 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col col-md-8 col-lg-9">
                     <div class="row row-cols-1 gy-5">
                         {% for subcategory, products in products_by_subcategory.items %}
                             <div class="col">
                                 <h3 class="fw-semibold mb-4">{{ subcategory.name }}</h3>
-                                <div class="row row-cols-2 row-cols-lg-3 row-cols-xl-4 gap-3">
+                                <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4">
                                     {% for product in products %}
                                         <div class="col mb-4">
                                             <a href="{% url "ironmongeryApp:client_product_detail" product.id %}" class="text-decoration-none">
